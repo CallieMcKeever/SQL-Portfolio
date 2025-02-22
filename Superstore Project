@@ -50,7 +50,7 @@ SELECT avg(price),category
 FROM superstore
 WHERE category='Kitchen Supplies';
 
---#6 Which items need to be restocked (have a stock quantity less than 40)?
+--#6 Which items need to be restocked (have a stock quantity less than or equal to 40)?
 SELECT item_name, stock_quantity
 FROM superstore
 WHERE stock_quantity<=40
