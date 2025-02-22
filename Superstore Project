@@ -41,7 +41,7 @@ FROM superstore;
 SELECT min(price)
 FROM superstore;
 
---#4What is the average price of items in the store?
+--#4 What is the average price of items in the store?
 SELECT avg(price)
 FROM superstore;
 
