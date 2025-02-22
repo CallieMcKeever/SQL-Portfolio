@@ -37,23 +37,29 @@ ORDER BY price asc;
 SELECT max(price)
 FROM superstore;
 
---#3 What is the average price of items in Kitchen Supplies?
+--#3 What is the min price of items?
+SELECT min(price)
+FROM superstore;
+
+--#4What is the average price of items in the store?
+SELECT avg(price)
+FROM superstore;
+
+--#5 What is the average price of items in Kitchen Supplies?
 SELECT avg(price),category
 FROM superstore
 WHERE category='Kitchen Supplies';
 
---#4 Which items have a stock quantity greater than 50?
+--#6 Which items need to be restocked (have a stock quantity less than 40)?
 SELECT item_name, stock_quantity
 FROM superstore
-WHERE stock_quantity>=50
+WHERE stock_quantity<=40
 ORDER BY stock_quantity asc;
 
---#5 What are the prices and stock quantity for kitchen supply items?
-SELECT item_name, price, stock_quantity, category
-FROM superstore
-WHERE category='Kitchen Supplies';
+--#7 What are the prices and stock quantity for all merchandise?
+SELECT item_name, price, stock_quantity
+FROM superstore;
 
---#6 How much would superstore make if they sold all in stock kitchen supplies?
-SELECT sum(price*stock_quantity), category
-FROM superstore
-WHERE category='Kitchen Supplies';
+--#8 What is the total value of the merchandise currently in stock?
+SELECT sum(price*stock_quantity)
+FROM superstore;
