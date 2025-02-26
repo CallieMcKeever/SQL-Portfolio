@@ -1,4 +1,4 @@
---This project utlized data from the following data set:
+--This project utlized data from the following dataset:
 CREATE TABLE superstore (
     item_id INTEGER PRIMARY KEY,
     item_name TEXT,
