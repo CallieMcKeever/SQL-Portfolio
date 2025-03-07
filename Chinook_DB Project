@@ -134,3 +134,4 @@ GROUP BY media_types.Name
 ORDER BY NumberSold desc;
 
 
+
