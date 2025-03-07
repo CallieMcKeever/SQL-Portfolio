@@ -1,0 +1,72 @@
+CREATE TABLE BIT_DB.Spotifydata (
+    id               INTEGER        PRIMARY KEY,
+    artist_name      VARCHAR        NOT NULL,
+    track_name       VARCHAR        NOT NULL,
+    track_id         VARCHAR        NOT NULL,
+    popularity       INTEGER        NOT NULL,
+    danceability     DECIMAL (4, 3) NOT NULL,
+    energy           DECIMAL (4, 3) NOT NULL,
+    song_key         INTEGER        NOT NULL,
+    loudness         DECIMAL (5, 3) NOT NULL,
+    song_mode        INTEGER        NOT NULL,
+    speechiness      DECIMAL (5, 4) NOT NULL,
+    acousticness     DECIMAL (6, 5) NOT NULL,
+    instrumentalness DECIMAL (8, 7) NOT NULL,
+    liveness         DECIMAL (5, 4) NOT NULL,
+    valence          DECIMAL (4, 3) NOT NULL,
+    tempo            DECIMAL (6, 3) NOT NULL,
+    duration_ms      INTEGER        NOT NULL,
+    time_signature   INTEGER        NOT NULL
+);
+
+SELECT *
+FROM BIT_DB.Spotifydata;
+  
+--What is the number one song based on popularity?
+SELECT artist_name AS artist, track_name AS Track
+FROM BIT_DB.Spotifydata 
+ORDER BY popularity desc
+LIMIT 1;
+
+--Which songs have an acousticness above 75%?
+SELECT artist_name AS Artist, track_name AS Track
+FROM BIT_DB.Spotifydata
+GROUP BY acousticness
+HAVING acousticness>.75;
+
+--What is the average duration of songs?
+SELECT ROUND((AVG(duration_ms)/60000),2) AS Average_Duration_Minutes
+FROM BIT_DB.Spotifydata;
+
+--Which songs have a danceability higher than 75%?
+SELECT track_name AS Track 
+FROM BIT_DB.Spotifydata
+GROUP BY danceability
+HAVING danceability>.75;
+
+--What are the top 5 songs in terms of popularity?
+SELECT track_name AS track
+FROM BIT_DB.Spotifydata
+ORDER BY popularity desc
+LIMIT 5;
+
+--What is the average dancebility of the top 5 most popular songs?
+SELECT AVG(danceability)*100 AS Percent_Danceability
+FROM BIT_DB.Spotifydata
+WHERE track_name IN
+(SELECT track_name AS track
+FROM BIT_DB.Spotifydata
+ORDER BY popularity desc
+LIMIT 5);
+
+WITH popularity_average_CTE AS
+(SELECT artist_name,
+AVG(popularity) as average_popularity
+FROM Spotifydata
+GROUP BY artist_name)
+SELECT artist_name, 
+average_popularity, 
+'Top Star' AS Tag
+FROM popularity_average_CTE 
+WHERE average_popularity>=90;
+
