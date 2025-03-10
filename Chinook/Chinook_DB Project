@@ -114,21 +114,21 @@ ORDER BY COUNT(tracks.Name) desc
 LIMIT 5;
 
 --16. How many of each media_type were sold in 2009?
-SELECT media_types.Name AS Media_type, COUNT(media_types.Name) AS NumberSold
+SELECT media_types.Name AS Media_type, COUNT(tracks.MediaTypeID) AS NumberSold
 FROM chinook.invoice_items 
-JOIN chinook.tracks ON invoice_items.TrackId=tracks.TrackId
-JOIN chinook.media_types ON tracks.MediaTypeId=media_types.MediaTypeId
 JOIN chinook.invoices ON invoices.InvoiceId=invoice_items.InvoiceId
+LEFT JOIN chinook.tracks ON invoice_items.TrackId=tracks.TrackId
+LEFT JOIN chinook.media_types ON tracks.MediaTypeId=media_types.MediaTypeId
 WHERE invoices.InvoiceDate LIKE '2009%'
 GROUP BY media_types.Name
 ORDER BY NumberSold desc;
 
 --17. How many of each media_type were sold in 2013?
-SELECT media_types.Name AS Media_type, COUNT(media_types.Name) AS NumberSold
+SELECT media_types.Name AS Media_type, COUNT(tracks.mediaTypeId) AS NumberSold
 FROM chinook.invoice_items 
-JOIN chinook.tracks ON invoice_items.TrackId=tracks.TrackId
-JOIN chinook.media_types ON tracks.MediaTypeId=media_types.MediaTypeId
 JOIN chinook.invoices ON invoices.InvoiceId=invoice_items.InvoiceId
+LEFT JOIN chinook.tracks ON invoice_items.TrackId=tracks.TrackId
+LEFT JOIN chinook.media_types ON tracks.MediaTypeId=media_types.MediaTypeId
 WHERE invoices.InvoiceDate LIKE '2013%'
 GROUP BY media_types.Name
 ORDER BY NumberSold desc;
