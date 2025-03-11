@@ -133,5 +133,16 @@ WHERE invoices.InvoiceDate LIKE '2013%'
 GROUP BY media_types.Name
 ORDER BY NumberSold desc;
 
+--Which songs appear on more than one playlist?
+SELECT DISTINCT tracks.name as Track
+, artists.Name as Artist
+, COUNT(playlists.PlaylistID) AS PlaylistCount
+FROM chinook.playlists
+JOIN chinook.playlist_track ON playlists.PlaylistId=playlist_track.PlaylistId
+JOIN chinook.tracks ON playlist_track.TrackId=tracks.TrackId
+JOIN chinook.albums ON tracks.AlbumID=albums.AlbumID
+JOIN chinook.artists ON artists.ArtistId=albums.AlbumId
+GROUP BY tracks.Name
+HAVING COUNT(playlists.PlaylistID) >1;
 
 
