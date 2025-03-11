@@ -133,7 +133,7 @@ WHERE invoices.InvoiceDate LIKE '2013%'
 GROUP BY media_types.Name
 ORDER BY NumberSold desc;
 
---Which songs appear on more than one playlist?
+--18. Which songs appear on more than one playlist?
 SELECT DISTINCT tracks.name as Track
 , artists.Name as Artist
 , COUNT(playlists.PlaylistID) AS PlaylistCount
@@ -145,4 +145,19 @@ JOIN chinook.artists ON artists.ArtistId=albums.AlbumId
 GROUP BY tracks.Name
 HAVING COUNT(playlists.PlaylistID) >1;
 
+-- 19. What is the length of the each playlist in minutes?
+SELECT playlists.PlaylistId
+, playlists.Name AS Playlist  
+, SUM(tracks.Milliseconds)/60000 AS Length_Minutes
+FROM chinook.playlists
+JOIN chinook.playlist_track ON playlists.PlaylistId=playlist_track.PlaylistId
+JOIN chinook.tracks ON playlist_track.TrackId=tracks.TrackId
+GROUP BY playlists.PlaylistId;
 
+--20. List all the songs on playlist 'Grunge' (playlist 16)
+SELECT tracks.Name
+FROM chinook.tracks
+JOIN chinook.playlist_track ON tracks.TrackID=playlist_track.TrackId
+JOIN chinook.playlists ON playlist_track.PlaylistId=playlists.PlaylistId
+WHERE playlists.Name='Grunge'
+ORDER BY tracks.Name;
